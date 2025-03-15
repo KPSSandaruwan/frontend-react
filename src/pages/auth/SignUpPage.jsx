@@ -1,24 +1,19 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; import instance from '../../utils/baseUrl';
+import { useNavigate } from 'react-router-dom';
+import instance from '../../utils/baseUrl';
+import { useAuth } from '../../utils/authUtils';
 
 export default function SignUpPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate(); 
+  const { signUp } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const response = await instance.post("register", {
-        email: username,
-        password: password
-      });
-
-      if (response.data.success === true) {
-        navigate('/auth/login', { replace: true });
-      }
-    } catch (error) {
-      console.error(error);
+    const response = await signUp(username, password);
+    if (response) {
+      navigate('/auth/login', { replace: true });
     }
   }
 

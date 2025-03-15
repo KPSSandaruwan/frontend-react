@@ -8,14 +8,21 @@ export const AuthProvider = ({ children }) => {
   const [isLogged, setIsLogged] = useState(false);
 
   const logIn = async (username, password) => {
-    const response = await instance.post("login", {
-      email: username,
-      password: password
-    });
-
-    if (response.success === true) {
-      setIsLogged(true);
-      navigator.push("/game-dashboard");
+    try {
+      const response = await instance.post("login", {
+        email: username,
+        password: password
+      });
+  
+      if (response.data.success === true) {
+        console.log(response.data);
+        localStorage.setItem("AccessToken", response.data.token);
+        setIsLogged(true);
+        return true;
+      }
+    } catch (error) {
+      console.error(error);
+      return false;
     }
   };
 
@@ -30,7 +37,7 @@ export const AuthProvider = ({ children }) => {
         password: password
       });
 
-      if (response.success === true) {
+      if (response.data.success === true) {
         return true;
       }
     } catch (error) {

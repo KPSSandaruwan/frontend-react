@@ -1,14 +1,20 @@
 import React, { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../utils/authUtils';
 
 export default function SignUpPage() {
   const { logIn } = useAuth();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    logIn(username, password);
+    const response = await logIn(username, password);
+
+    if (response) {
+      navigate('/new/game-dashboard', { replace: true });
+    }
   }
 
   return (
@@ -27,7 +33,7 @@ export default function SignUpPage() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button type="submit">Sign Up</button>
+        <button type="submit">Log In</button>
       </form>
     </div>
   );
