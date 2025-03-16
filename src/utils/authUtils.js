@@ -1,11 +1,13 @@
 import { createContext, useEffect, useState, useContext } from 'react';
-import { ACCESS_TOKEN_NAME } from '../constants/globalValues';
 import instance from './baseUrl';
 
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
-  const [isLogged, setIsLogged] = useState(false);
+  const [isLogged, setIsLogged] = useState(
+    !!localStorage.getItem("AccessToken")
+  );
+  console.log('isLogged');
 
   const logIn = async (username, password) => {
     try {
@@ -47,7 +49,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    if (localStorage.getItem(ACCESS_TOKEN_NAME)) {
+    if (localStorage.getItem("AccessToken")) {
       setIsLogged(true);
     } else {
       setIsLogged(false);
