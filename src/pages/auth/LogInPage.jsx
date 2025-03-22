@@ -1,8 +1,8 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../utils/authUtils';
 
-export default function SignUpPage() {
+const LogInPage = () => {
   const { logIn } = useAuth();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -38,3 +38,5 @@ export default function SignUpPage() {
     </div>
   );
 }
+
+export default LogInPage;

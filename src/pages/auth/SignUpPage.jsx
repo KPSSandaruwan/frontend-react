@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import instance from '../../utils/baseUrl';
 import { useAuth } from '../../utils/authUtils';
 
 export default function SignUpPage() {

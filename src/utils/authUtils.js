@@ -1,5 +1,5 @@
-import { createContext, useEffect, useState, useContext } from 'react';
-import instance from './baseUrl';
+import { createContext, useEffect, useState, useContext } from "react";
+import { instance, publicInstance } from "./baseUrl";
 
 const AuthContext = createContext(null);
 
@@ -7,15 +7,15 @@ export const AuthProvider = ({ children }) => {
   const [isLogged, setIsLogged] = useState(
     !!localStorage.getItem("AccessToken")
   );
-  console.log('isLogged');
+  console.log("isLogged");
 
   const logIn = async (username, password) => {
     try {
-      const response = await instance.post("login", {
+      const response = await publicInstance.post("login", {
         email: username,
         password: password
       });
-  
+
       if (response.data.success === true) {
         console.log(response.data);
         localStorage.setItem("AccessToken", response.data.token);
@@ -34,7 +34,7 @@ export const AuthProvider = ({ children }) => {
 
   const signUp = async (username, password) => {
     try {
-      const response = await instance.post("register", {
+      const response = await publicInstance.post("register", {
         email: username,
         password: password
       });
@@ -61,7 +61,7 @@ export const AuthProvider = ({ children }) => {
       {children}
     </AuthContext.Provider>
   );
-}
+};
 
 export const useAuth = () => {
   return useContext(AuthContext);

@@ -3,6 +3,7 @@
 // Initial state of the game
 const initialState = {
   game: {
+    gameId: null,
     board: [
       ["", "", ""],
       ["", "", ""],
@@ -24,9 +25,20 @@ const gameReducer = (state = initialState, action) => {
         ...state,
         game: {
           ...state.game,
+          gameId: action.payload.gameId,
           board: action.payload.board,
           currentTurn: action.payload.currentTurn,
           player: action.payload.player,
+          gameStatus: action.payload.gameStatus
+        }
+      };
+    case "PLAY_GAME":
+      return {
+        ...state,
+        game: {
+          ...state.game,
+          board: action.payload.board,
+          currentTurn: action.payload.currentTurn,
           gameStatus: action.payload.gameStatus
         }
       };
